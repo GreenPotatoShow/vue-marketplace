@@ -5,7 +5,7 @@
         <h4 class="item-name">{{item.name}}</h4>
         <div class="item-price">{{item.price}}</div>
     </a>
-    <button-cart :id="item.id" @add-to-cart="$emit('add-to-cart', item.id)"></button-cart>
+    <button-cart :cartEmpty="cartEmpty" :id="item.id" @add-to-cart="$emit('add-to-cart', item.id)"></button-cart>
 </div>
 </template>
 
@@ -15,6 +15,7 @@ export default {
     name: 'itemCard',
     props: {
         item: Object,
+        cartEmpty: Function,
     },
     components: {
         ButtonCart,

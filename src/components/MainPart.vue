@@ -1,7 +1,7 @@
 <template>
     <div class="main-part">
         <div class="chapter">{{text}}</div>
-        <item-cards @update-counter="$emit('update-counter')"></item-cards>
+        <item-cards :cartEmpty="cartEmpty" @update-counter="$emit('update-counter')"></item-cards>
     </div>
 </template>
 
@@ -9,7 +9,7 @@
 import ItemCards from './ItemCards'
 export default {
     name: 'MainPart',
-    props: ['text'],
+    props: ['text', 'cartEmpty'],
     components: {
       ItemCards,
     },

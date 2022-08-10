@@ -1,7 +1,7 @@
 <template>
 <div class="header">
     <the-logo></the-logo>
-    <cart-icon :counterCart="counterCart"></cart-icon>
+    <cart-icon :cartCounter="cartCounter"></cart-icon>
 </div>
 </template>
 
@@ -11,7 +11,7 @@ import CartIcon from "./CartIcon"
 export default {
     name: 'TheHeader',
     props: {
-      counterCart: Number,
+      cartCounter: Number,
     },
     components: {
         TheLogo,

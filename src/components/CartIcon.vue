@@ -2,7 +2,7 @@
     <div class="header-cart">
         <div class="cart-logo">
             <a href="cart.html" class="cart">
-              <div v-if="counterCart !== 0" class="counter">{{counterCart}}</div>
+              <div v-show="cartCounter !== 0" class="counter">{{cartCounter}}</div>
               <img class="cart" src="../assets/cart.png">
               <div>Корзина</div>
             </a>
@@ -14,7 +14,7 @@
 
 export default{
     name: 'CartIcon',
-    props: ['text', 'counterCart'],
+    props: ['text', 'cartCounter'],
 }
 </script>
 

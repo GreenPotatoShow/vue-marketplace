@@ -1,7 +1,7 @@
 <template>
 <div>
-  <the-header :counterCart="cartCounter"></the-header>
-  <main-part @update-counter="updateCounter" :text="'Товары'"></main-part>
+  <the-header :cartCounter="cartCounter"></the-header>
+  <main-part :cartEmpty="cartEmpty" @update-counter="updateCounter" :text="'Товары'"></main-part>
 </div>
 </template>
 
@@ -19,6 +19,14 @@ export default {
     return {
       cartCounter: 0,
     }
+  },
+  created() {
+    const cart = localStorage.getItem('cart');
+      if (!this.cartEmpty()) {
+        const parsedCart = JSON.parse(cart).filter (item => item.count !== 0 );
+        localStorage.setItem('cart', JSON.stringify(parsedCart));
+        this.cartCounter = parsedCart.length;
+      }
   },
   methods: {
     updateCounter() {

@@ -1,7 +1,7 @@
 <template>
     <div id="goods">
         <div :key="item.id" v-for="item in items" class="item-card">
-            <item-card @add-to-cart="addToCart" :item="item" />
+            <item-card :cartEmpty="cartEmpty" @add-to-cart="addToCart" :item="item" />
         </div>
     </div>
 </template>
@@ -20,6 +20,7 @@ class Item {
 import ItemCard from "./ItemCard"
 export default {
     name: 'ItemCards',
+    props: ['cartEmpty'],
     data() {
         return {
             items: [
