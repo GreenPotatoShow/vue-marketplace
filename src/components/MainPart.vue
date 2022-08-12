@@ -16,7 +16,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .main-part {
   display: flex;
   flex-flow: column wrap;

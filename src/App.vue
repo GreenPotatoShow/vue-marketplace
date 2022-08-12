@@ -1,7 +1,11 @@
 <template>
 <div>
-  <the-header :cartCounter="cartCounter"></the-header>
-  <main-part :cartEmpty="cartEmpty" @update-counter="updateCounter" :text="'Товары'"></main-part>
+  <the-header @go-to-index="page = 'index'" @go-to-cart="page = 'cart'" :cartCounter="cartCounter"></the-header>
+
+  <main-part v-if="page === 'index'" :cartEmpty="cartEmpty" @update-counter="updateCounter" :text="'Товары'"></main-part>
+
+  <cart-main-part v-if="page === 'cart'" :cartEmpty="cartEmpty" :text="'Корзина'"></cart-main-part>
+
 </div>
 </template>
 
@@ -9,15 +13,19 @@
 
 import TheHeader from "./components/TheHeader"
 import MainPart from "./components/MainPart"
+import CartMainPart from "./components/CartMainPart"
+
 export default {
   name: 'App',
   components: {
     TheHeader,
     MainPart,
+    CartMainPart,
   },
   data() {
     return {
       cartCounter: 0,
+      page: 'index',
     }
   },
   created() {

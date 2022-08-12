@@ -1,11 +1,11 @@
 <template>
     <div class="header-cart">
         <div class="cart-logo">
-            <a href="cart.html" class="cart">
+            <div @click="$emit('go-to-cart')" class="cart">
               <div v-show="cartCounter !== 0" class="counter">{{cartCounter}}</div>
               <img class="cart" src="../assets/cart.png">
               <div>Корзина</div>
-            </a>
+            </div>
         </div>
     </div>
 </template>
@@ -22,6 +22,7 @@ export default{
 .header-cart {
   display: flex;
   flex-flow: column wrap;
+  cursor: pointer;
 }
 
 .cart-logo{
@@ -45,7 +46,7 @@ export default{
   border: 2px solid #8323ab;
 }
 
-a.cart {
+div.cart {
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
   color: #fac136;
 }
