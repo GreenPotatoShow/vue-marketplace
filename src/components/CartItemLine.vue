@@ -4,9 +4,9 @@
             <h4 class="cart-item-name"> {{item.name}}</h4>
         </div>
         <div class="div">
-            <button @click="clickMinus" class="button-counter">-</button>
+            <button @click="$emit('cart-minus', item.id)" class="button-counter">-</button>
             <div class="cart-item-counter">{{item.count}}</div> 
-            <button class="button-counter">+</button>
+            <button @click="$emit('cart-plus', item.id)" class="button-counter">+</button>
         </div>
         <div class="item-cost">{{item.count * item.price}}</div>
     </div>
@@ -18,15 +18,6 @@ export default {
     props: {
         item: Object,
     },
-    methods: {
-        clickMinus() {
-            if (this.item.count > 0) {
-                this.totalCost -= this.item.price;
-                this.countAll -= 1;
-                this.$emit('cart-minus', this.item.id);
-            }
-        }
-    }
 }
 </script>
 

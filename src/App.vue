@@ -1,6 +1,6 @@
 <template>
 <div>
-  <the-header @go-to-index="page = 'index'" @go-to-cart="page = 'cart'" :cartCounter="cartCounter"></the-header>
+  <the-header @go-to-index="goToIndex" @go-to-cart="page = 'cart'" :cartCounter="cartCounter"></the-header>
 
   <main-part v-if="page === 'index'" :cartEmpty="cartEmpty" @update-counter="updateCounter" :text="'Товары'"></main-part>
 
@@ -48,9 +48,14 @@ export default {
     },
 
     cartEmpty() {
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    return (!cart || Array.isArray(cart) && cart.length === 0);
+      const cart = JSON.parse(localStorage.getItem('cart'));
+      return (!cart || Array.isArray(cart) && cart.length === 0);
     },
+
+    goToIndex() {
+      this.page = 'index';
+      this.updateCounter();
+    }
   },
 }
 </script>

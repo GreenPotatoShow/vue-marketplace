@@ -3,14 +3,14 @@
         <div class="cart-item-part">
             <div class="chapter">Корзина</div>
             <div class="empty-cart" v-if="cartEmpty()">Корзина пуста</div>
-            <cart-item-lines @cart-minus="cartMinus"></cart-item-lines>
+            <cart-item-lines :items="items" @cart-minus="cartMinus" @cart-plus="cartPlus"></cart-item-lines>
         </div>
         <div class="cart-total-main-part">
             <div class="cart-total">
                 <div class="chapter">Итого: </div>
                 <div class="count-all">{{countAll + wordCase()}}</div>
                 <div class="cost-total">{{totalCost}}</div>
-                <button class="button-order">Оформить</button>
+                <button :class="{'button-order': countAll > 0, 'zero-items': countAll <= 0}" :disabled="countAll <= 0">Оформить</button>
             </div>
         </div>
     </div>    
@@ -32,12 +32,14 @@ export default {
         text: String,
         cartEmpty: Function,
     },
-    created() {
+    mounted() {
         this.items = JSON.parse(localStorage.getItem('cart'));
-        this.items.forEach((item) => {
-            this.countAll += item.count;
-            this.totalCost += item.count*item.price;
-            });
+        if (this.items) {
+          this.items.forEach((item) => {
+          this.countAll += item.count;
+          this.totalCost += item.count*item.price;
+          });
+        }
     },
     components: {
         CartItemLines,
@@ -54,9 +56,38 @@ export default {
             else {return ' товаров';}
         },
         cartMinus(id){
-            const item = this.items.find (item => item.id = id);
-            item.count -= 1;
+          this.items = JSON.parse(localStorage.getItem('cart'));
+          this.countAll = 0;
+          this.totalCost = 0;
+          if (this.items) {
+            this.items.forEach((item) => {
+            this.countAll += item.count;
+            this.totalCost += item.count*item.price;
+            });
+          }
+          const itemNeed = this.items.find (item => item.id === id);
+          if (itemNeed.count > 0){
+            itemNeed.count -= 1;
+            this.totalCost -= itemNeed.price;
+            this.countAll -= 1;
             localStorage.setItem('cart', JSON.stringify(this.items));
+          }
+        },
+        cartPlus(id){
+          this.items = JSON.parse(localStorage.getItem('cart'));
+          this.countAll = 0;
+          this.totalCost = 0;
+          if (this.items) {
+            this.items.forEach((item) => {
+            this.countAll += item.count;
+            this.totalCost += item.count*item.price;
+            });
+          }
+          const itemNeed = this.items.find (item => item.id === id);
+          itemNeed.count += 1;
+          this.totalCost += itemNeed.price;
+          this.countAll += 1;
+          localStorage.setItem('cart', JSON.stringify(this.items));
         }
     }
 }
