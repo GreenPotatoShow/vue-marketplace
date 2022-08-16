@@ -1,71 +1,54 @@
 <template>
-    <div id="goods">
-        <div :key="item.id" v-for="item in items" class="item-card">
-            <item-card :cartEmpty="cartEmpty" @add-to-cart="addToCart" :item="item" />
-        </div>
+  <div id="goods">
+    <div :key="item.id" v-for="item in items" class="item-card">
+      <item-card @add-to-cart="addToCart" :item="item" />
     </div>
+  </div>
 </template>
 
 <script>
+import ItemCard from './ItemCard.vue';
+import { setCart, getCart } from '../utils/functions';
+import { allItems } from '../utils/items';
 
-class Item {
-  constructor(id, name, price, count = 0) {
-    this.id = id;
-    this.name = name;
-    this.price = price;
-    this.count = count;
-  }
-}
-
-import ItemCard from "./ItemCard"
 export default {
-    name: 'ItemCards',
-    props: ['cartEmpty'],
-    data() {
-        return {
-            items: [
-                    new Item(0, '1', 100),
-                    new Item(1, '2', 1000),
-                    new Item(2, '3', 10000),
-                    new Item(3, '4', 100000),
-            ]
-        }
-    },
-    components: {
-        ItemCard,
-    },
-    methods: {
-      addToCart(id){
-        const itemToAdd = this.items[id];
-        const cart = localStorage.getItem('cart');
+  name: 'ItemCards',
+  data() {
+    return {
+      items: allItems,
+    };
+  },
+  components: {
+    ItemCard,
+  },
+  methods: {
+    addToCart(id) {
+      const itemToAdd = this.items[id];
+      const cart = getCart();
 
-        let newCart;
-        if (cart) {
-            const parsedCart = JSON.parse(cart);
-            const itemObject = parsedCart.find((item) => +item.id === +id);
-            const itemIndex = parsedCart.indexOf(itemObject);
-            if (itemIndex === -1) {
-                newCart = [...parsedCart, itemToAdd];
-                itemToAdd.count = 1;
-            }
-            else {
-                parsedCart.splice(itemIndex, 1);
-                newCart = parsedCart;
-                itemToAdd.count = 0;
-            }
+      let newCart;
+      if (cart) {
+        const itemObject = cart.find((item) => item.id === id);
+        if (typeof itemObject === 'undefined') {
+          newCart = [...cart, itemToAdd];
+          itemToAdd.count = 1;
         } else {
-            newCart = [itemToAdd];
-            itemToAdd.count = 1;
+          newCart = cart.filter((item) => item.id !== id);
+          itemToAdd.count = 0;
         }
-
-        localStorage.setItem('cart', JSON.stringify(newCart));
-        this.$emit('update-counter');
+      } else {
+        newCart = [itemToAdd];
+        itemToAdd.count = 1;
       }
+
+      setCart(newCart);
+      this.$emit('update-counter');
     },
-}
+  },
+};
 </script>
 
-<style scoped>
+<style>
 #goods {
   margin: 10px 40px 30px 0;
   display: flex;

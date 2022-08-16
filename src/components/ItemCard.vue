@@ -1,29 +1,31 @@
 <template>
 <div class="item-card">
-    <a href="#">
-        <img class="item" :src="require(`../assets/picture${item.id + 1}.jpg`)">
-        <h4 class="item-name">{{item.name}}</h4>
-        <div class="item-price">{{item.price}}</div>
-    </a>
-    <button-cart :cartEmpty="cartEmpty" :id="item.id" @add-to-cart="$emit('add-to-cart', item.id)"></button-cart>
+  <a href="#">
+    <img class="item" :src="require(`../assets/picture${item.id + 1}.jpg`)">
+    <h4 class="item-name">{{item.name}}</h4>
+    <div class="item-price">{{item.price}}</div>
+  </a>
+  <button-cart
+  :id="item.id"
+  @add-to-cart="$emit('add-to-cart', item.id)"></button-cart>
 </div>
 </template>
 
 <script>
-import ButtonCart from './ButtonCart'
+import ButtonCart from './ButtonCart.vue';
+
 export default {
-    name: 'itemCard',
-    props: {
-        item: Object,
-        cartEmpty: Function,
-    },
-    components: {
-        ButtonCart,
-    },
-}
+  name: 'itemCard',
+  props: {
+    item: { type: Object, required: true },
+  },
+  components: {
+    ButtonCart,
+  },
+};
 </script>
 
-<style scoped>
+<style>
 img.item {
   margin-top: 10px;
   border-radius: 10px;
@@ -67,5 +69,4 @@ img.item:active {
 .item-price:hover {
   color: rgb(53, 52, 52);
 }
-
 </style>

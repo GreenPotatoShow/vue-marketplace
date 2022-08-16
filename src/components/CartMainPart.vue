@@ -1,99 +1,118 @@
 <template>
-    <div class="cart-main-part">
-        <div class="cart-item-part">
-            <div class="chapter">Корзина</div>
-            <div class="empty-cart" v-if="cartEmpty()">Корзина пуста</div>
-            <cart-item-lines :items="items" @cart-minus="cartMinus" @cart-plus="cartPlus"></cart-item-lines>
-        </div>
-        <div class="cart-total-main-part">
-            <div class="cart-total">
-                <div class="chapter">Итого: </div>
-                <div class="count-all">{{countAll + wordCase()}}</div>
-                <div class="cost-total">{{totalCost}}</div>
-                <button :class="{'button-order': countAll > 0, 'zero-items': countAll <= 0}" :disabled="countAll <= 0">Оформить</button>
-            </div>
-        </div>
-    </div>    
+  <div class="cart-main-part">
+    <div class="cart-item-part">
+      <div class="chapter">Корзина</div>
+      <div class="empty-cart" v-if="empty">Корзина пуста</div>
+      <cart-item-lines
+      :cartItems="cartItems"
+      @cart-minus="cartMinus"
+      @cart-plus="cartPlus"></cart-item-lines>
+    </div>
+    <div class="cart-total-main-part">
+      <div class="cart-total">
+        <div class="chapter">Итого: </div>
+        <div class="count-all">{{countAll + wordCase()}}</div>
+        <div class="cost-total">{{totalCost}}</div>
+        <button
+        :class="btnClass"
+        :disabled="countAll <= 0">Оформить</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import CartItemLines from './CartItemLines'
+import CartItemLines from './CartItemLines.vue';
+import { setCart, getCart, cartEmpty } from '../utils/functions';
 
 export default {
-    name: 'CartMainPart',
-    data() {
-        return {
-            countAll: 0,
-            totalCost: 0,
-            items: [],
-        }
-    },
-    props: {
-        text: String,
-        cartEmpty: Function,
-    },
-    mounted() {
-        this.items = JSON.parse(localStorage.getItem('cart'));
-        if (this.items) {
-          this.items.forEach((item) => {
-          this.countAll += item.count;
-          this.totalCost += item.count*item.price;
-          });
-        }
-    },
-    components: {
-        CartItemLines,
-    },
-    methods: {
-        wordCase() {
-            if (this.countAll % 100 < 20 && this.countAll % 100 > 10) {
-                return ' товаров';
-            }
-            else if (this.countAll % 10 === 1) { return ' товар';}
-            else if (this.countAll % 10 === 2 || this.countAll % 10 === 3 || this.countAll % 10 === 4) {
-                return ' товара';
-            }
-            else {return ' товаров';}
-        },
-        cartMinus(id){
-          this.items = JSON.parse(localStorage.getItem('cart'));
-          this.countAll = 0;
-          this.totalCost = 0;
-          if (this.items) {
-            this.items.forEach((item) => {
-            this.countAll += item.count;
-            this.totalCost += item.count*item.price;
-            });
-          }
-          const itemNeed = this.items.find (item => item.id === id);
-          if (itemNeed.count > 0){
-            itemNeed.count -= 1;
-            this.totalCost -= itemNeed.price;
-            this.countAll -= 1;
-            localStorage.setItem('cart', JSON.stringify(this.items));
-          }
-        },
-        cartPlus(id){
-          this.items = JSON.parse(localStorage.getItem('cart'));
-          this.countAll = 0;
-          this.totalCost = 0;
-          if (this.items) {
-            this.items.forEach((item) => {
-            this.countAll += item.count;
-            this.totalCost += item.count*item.price;
-            });
-          }
-          const itemNeed = this.items.find (item => item.id === id);
-          itemNeed.count += 1;
-          this.totalCost += itemNeed.price;
-          this.countAll += 1;
-          localStorage.setItem('cart', JSON.stringify(this.items));
-        }
+  name: 'CartMainPart',
+  data() {
+    return {
+      countAll: 0,
+      totalCost: 0,
+      cartItems: [],
+      empty: false,
+    };
+  },
+  props: {
+    text: { type: String, required: true },
+  },
+  mounted() {
+    this.cartItems = getCart();
+    if (this.cartItems) {
+      this.cartItems.forEach((item) => {
+        this.countAll += item.count;
+        this.totalCost += item.count * item.price;
+      });
     }
-}
+    if (cartEmpty(this.cartItems)) {
+      this.empty = true;
+    }
+  },
+  components: {
+    CartItemLines,
+  },
+  computed: {
+    btnClass() {
+      return {
+        'button-order': this.countAll > 0,
+        'zero-items': this.countAll <= 0,
+      };
+    },
+  },
+  methods: {
+    wordCase() {
+      if (this.countAll % 100 < 20 && this.countAll % 100 > 10) {
+        return ' товаров';
+      }
+      if (this.countAll % 10 === 1) {
+        return ' товар';
+      }
+      if (this.countAll % 10 === 2 || this.countAll % 10 === 3 || this.countAll % 10 === 4) {
+        return ' товара';
+      }
+      return ' товаров';
+    },
+    cartMinus(id) {
+      this.cartItems = getCart();
+      this.countAll = 0;
+      this.totalCost = 0;
+      if (this.cartItems) {
+        this.cartItems.forEach((item) => {
+          this.countAll += item.count;
+          this.totalCost += item.count * item.price;
+        });
+      }
+      const itemNeed = this.cartItems.find((item) => item.id === id);
+      if (itemNeed.count > 0) {
+        itemNeed.count -= 1;
+        this.totalCost -= itemNeed.price;
+        this.countAll -= 1;
+        setCart(this.cartItems);
+      }
+    },
+    cartPlus(id) {
+      this.cartItems = getCart();
+      this.countAll = 0;
+      this.totalCost = 0;
+      if (this.cartItems) {
+        this.cartItems.forEach((item) => {
+          this.countAll += item.count;
+          this.totalCost += item.count * item.price;
+        });
+      }
+      const itemNeed = this.cartItems.find((item) => item.id === id);
+      itemNeed.count += 1;
+      this.totalCost += itemNeed.price;
+      this.countAll += 1;
+      setCart(this.cartItems);
+    },
+  },
+};
 </script>
 
-<style scoped>
+<style>
 .cart-main-part {
   display: flex;
   flex-flow: row wrap;

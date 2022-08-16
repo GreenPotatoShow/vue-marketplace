@@ -1,24 +1,24 @@
 <template>
-    <div class="header-cart">
-        <div class="cart-logo">
-            <div @click="$emit('go-to-cart')" class="cart">
-              <div v-show="cartCounter !== 0" class="counter">{{cartCounter}}</div>
-              <img class="cart" src="../assets/cart.png">
-              <div>Корзина</div>
-            </div>
-        </div>
-    </div>
+  <div class="header-cart">
+    <a @click="$emit('go-to-cart')" class="cart-logo">
+      <div v-show="cartCounter !== 0" class="counter">{{cartCounter}}</div>
+      <img class="cart" src="../assets/cart.png">
+      <div class="cart">Корзина</div>
+    </a>
+  </div>
 </template>
 
 <script>
 
-export default{
-    name: 'CartIcon',
-    props: ['text', 'cartCounter'],
-}
+export default {
+  name: 'CartIcon',
+  props: {
+    cartCounter: { type: Number, required: true },
+  },
+};
 </script>
 
-<style scoped>
+<style>
 .header-cart {
   display: flex;
   flex-flow: column wrap;
@@ -46,7 +46,7 @@ export default{
   border: 2px solid #8323ab;
 }
 
-div.cart {
+.cart {
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
   color: #fac136;
 }
@@ -58,6 +58,8 @@ img.cart {
 }
 
 .counter {
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+  color: #fac136;
   border-radius: 20px;
   border: 2px solid #441761;
   width: 20px;

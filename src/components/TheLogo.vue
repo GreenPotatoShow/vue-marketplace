@@ -1,15 +1,14 @@
 <template>
-    <h1 @click="$emit('go-to-index')" class="logo">ИНТЕРНЕТ-МАГАЗИН</h1>
+  <a @click="$emit('go-to-index')"><h1 class="logo">ИНТЕРНЕТ-МАГАЗИН</h1></a>
 </template>
 
 <script>
 export default {
-    name: "TheLogo",
-    props: ['text']
-}
+  name: 'TheLogo',
+};
 </script>
 
-<style scoped>
+<style>
 .logo {
   margin-top: 28px;
   padding-top: 0;

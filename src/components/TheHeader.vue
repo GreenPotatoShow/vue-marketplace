@@ -1,27 +1,27 @@
 <template>
 <div class="header">
-    <the-logo @go-to-index="$emit('go-to-index')"></the-logo>
-    <cart-icon @go-to-cart="$emit('go-to-cart')" :cartCounter="cartCounter"></cart-icon>
+  <the-logo @go-to-index="$emit('go-to-index')"></the-logo>
+  <cart-icon @go-to-cart="$emit('go-to-cart')" :cartCounter="cartCounter"></cart-icon>
 </div>
 </template>
 
 <script>
-import TheLogo from "./TheLogo"
-import CartIcon from "./CartIcon"
+import TheLogo from './TheLogo.vue';
+import CartIcon from './CartIcon.vue';
+
 export default {
-    name: 'TheHeader',
-    props: {
-      cartCounter: Number,
-    },
-    components: {
-        TheLogo,
-        CartIcon
-    }
-}
+  name: 'TheHeader',
+  props: {
+    cartCounter: { type: Number, required: true },
+  },
+  components: {
+    TheLogo,
+    CartIcon,
+  },
+};
 </script>
 
-<style scoped>
-
+<style>
 .header {
   display: flex;
   justify-content: space-between;
@@ -29,7 +29,10 @@ export default {
   position: sticky;
   top: 0;
   background: rgb(68, 23, 97);
-  background: linear-gradient(90deg, rgb(68, 23, 97) 0%, rgb(131, 35, 171) 50%, rgb(193, 54, 250) 100%);
+  background: linear-gradient(90deg,
+  rgb(68, 23, 97) 0%,
+  rgb(131, 35, 171) 50%,
+  rgb(193, 54, 250) 100%);
 }
 
 .header-cart {

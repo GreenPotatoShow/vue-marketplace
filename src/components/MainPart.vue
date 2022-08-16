@@ -1,19 +1,19 @@
 <template>
-    <div class="main-part">
-        <div class="chapter">{{text}}</div>
-        <item-cards :cartEmpty="cartEmpty" @update-counter="$emit('update-counter')"></item-cards>
-    </div>
+  <div class="main-part">
+    <div class="chapter">Товары</div>
+    <item-cards @update-counter="$emit('update-counter')"></item-cards>
+  </div>
 </template>
 
 <script>
-import ItemCards from './ItemCards'
+import ItemCards from './ItemCards.vue';
+
 export default {
-    name: 'MainPart',
-    props: ['text', 'cartEmpty'],
-    components: {
-      ItemCards,
-    },
-}
+  name: 'MainPart',
+  components: {
+    ItemCards,
+  },
+};
 </script>
 
 <style>

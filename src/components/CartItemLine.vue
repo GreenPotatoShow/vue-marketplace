@@ -1,27 +1,27 @@
 <template>
-    <div class="cart-item-line">
-        <div :style="{width: '20vw'}">
-            <h4 class="cart-item-name"> {{item.name}}</h4>
-        </div>
-        <div class="div">
-            <button @click="$emit('cart-minus', item.id)" class="button-counter">-</button>
-            <div class="cart-item-counter">{{item.count}}</div> 
-            <button @click="$emit('cart-plus', item.id)" class="button-counter">+</button>
-        </div>
-        <div class="item-cost">{{item.count * item.price}}</div>
+  <div class="cart-item-line">
+    <div :style="{width: '20vw'}">
+      <h4 class="cart-item-name"> {{item.name}}</h4>
     </div>
+    <div class="div">
+      <button @click="$emit('cart-minus', item.id)" class="button-counter">-</button>
+      <div class="cart-item-counter">{{item.count}}</div>
+      <button @click="$emit('cart-plus', item.id)" class="button-counter">+</button>
+    </div>
+    <div class="item-cost">{{item.count * item.price}}</div>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'CartItemLine',
-    props: {
-        item: Object,
-    },
-}
+  name: 'CartItemLine',
+  props: {
+    item: { type: Object, required: true },
+  },
+};
 </script>
 
-<style scoped>
+<style>
 .cart-item-line {
   display: flex;
   flex-flow: row nowrap;

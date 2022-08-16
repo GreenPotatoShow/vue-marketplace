@@ -1,49 +1,57 @@
 <template>
-    <button @click="onclick" :class="{'button-cart': !isInCart, 'button-cart-clicked': isInCart}">{{text}}</button>
+  <button
+  @click="onClick"
+  :class="btnClass">{{text}}</button>
 </template>
 
 <script>
+import { getCart, cartEmpty } from '../utils/functions';
 
 export default {
-    name: 'ButtonCart',
-    data() {
-      return{
-        text: 'Добавить в корзину',
-        isInCart: false,
+  name: 'ButtonCart',
+  data() {
+    return {
+      text: 'Добавить в корзину',
+      isInCart: false,
+    };
+  },
+  props: {
+    id: { type: Number, required: true },
+  },
+  created() {
+    const cart = getCart();
+    if (!cartEmpty(cart)) {
+      const itemObject = cart.find((item) => item.id === this.id);
+      if (itemObject) {
+        this.isInCart = true;
+        this.text = 'Добавлено';
+      }
+    }
+  },
+  computed: {
+    btnClass() {
+      return {
+        'button-cart': !this.isInCart,
+        'button-cart-clicked': this.isInCart,
+      };
+    },
+  },
+  methods: {
+    onClick() {
+      this.$emit('add-to-cart', this.id);
+      if (this.isInCart === false) {
+        this.isInCart = true;
+        this.text = 'Добавлено';
+      } else {
+        this.isInCart = false;
+        this.text = 'Добавить в корзину';
       }
     },
-    props: {
-        id: Number,
-        cartEmpty: Function,
-    },
-    created(){
-      if (!this.cartEmpty()){
-        const cart = localStorage.getItem('cart');
-        const parsedCart = JSON.parse(cart);
-        const itemObject = parsedCart.find((item) => +item.id === +this.id);
-        if (itemObject){
-          this.isInCart = true;
-          this.text = 'Добавлено';
-        }
-      }
-    },
-    methods: {
-        onclick(){
-          this.$emit('add-to-cart', this.id);
-          if (this.isInCart === false) {
-            this.isInCart = true;
-            this.text = 'Добавлено';
-          }
-          else {
-            this.isInCart = false;
-            this.text = 'Добавить в корзину';
-          }
-        },
-    },
-}
+  },
+};
 </script>
 
-<style scoped>
+<style>
 .button-cart {
   margin-top: 10px;
   padding: 5px 15px;
