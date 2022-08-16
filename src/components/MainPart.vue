@@ -1,7 +1,8 @@
 <template>
   <div class="main-part">
-    <div class="chapter">Товары</div>
-    <item-cards @update-counter="$emit('update-counter')"></item-cards>
+    <div class="chapter">{{text}}</div>
+    <item-cards
+    @update-counter="$emit('update-counter')"></item-cards>
   </div>
 </template>
 
@@ -12,6 +13,12 @@ export default {
   name: 'MainPart',
   components: {
     ItemCards,
+  },
+  props: {
+    text: { type: String, required: true },
+  },
+  mounted() {
+    this.$emit('update-counter');
   },
 };
 </script>

@@ -1,14 +1,17 @@
 <template>
   <div id="goods">
     <div :key="item.id" v-for="item in items" class="item-card">
-      <item-card @add-to-cart="addToCart" :item="item" />
+      <item-card
+      @add-to-cart="addToCart"
+      @update-counter="$emit('update-counter')"
+      :item="item" />
     </div>
   </div>
 </template>
 
 <script>
 import ItemCard from './ItemCard.vue';
-import { setCart, getCart } from '../utils/functions';
+import { getCart, setCart } from '../utils/functions';
 import { allItems } from '../utils/items';
 
 export default {

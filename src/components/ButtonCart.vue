@@ -12,38 +12,32 @@ export default {
   data() {
     return {
       text: 'Добавить в корзину',
-      isInCart: false,
     };
   },
   props: {
     id: { type: Number, required: true },
+    btnClass: { type: Object, required: true },
+    isInCart: { type: Boolean, required: true },
   },
-  created() {
+  mounted() {
+    this.$emit('update-counter');
     const cart = getCart();
     if (!cartEmpty(cart)) {
       const itemObject = cart.find((item) => item.id === this.id);
       if (itemObject) {
-        this.isInCart = true;
+        this.$emit('is-in-cart');
         this.text = 'Добавлено';
       }
     }
-  },
-  computed: {
-    btnClass() {
-      return {
-        'button-cart': !this.isInCart,
-        'button-cart-clicked': this.isInCart,
-      };
-    },
   },
   methods: {
     onClick() {
       this.$emit('add-to-cart', this.id);
       if (this.isInCart === false) {
-        this.isInCart = true;
+        this.$emit('is-in-cart');
         this.text = 'Добавлено';
       } else {
-        this.isInCart = false;
+        this.$emit('is-in-cart');
         this.text = 'Добавить в корзину';
       }
     },

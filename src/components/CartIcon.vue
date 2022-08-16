@@ -2,8 +2,10 @@
   <div class="header-cart">
     <a @click="$emit('go-to-cart')" class="cart-logo">
       <div v-show="cartCounter !== 0" class="counter">{{cartCounter}}</div>
-      <img class="cart" src="../assets/cart.png">
-      <div class="cart">Корзина</div>
+      <router-link to="/cart">
+        <img class="cart" src="../assets/cart.png">
+        <div class="cart">Корзина</div>
+      </router-link>
     </a>
   </div>
 </template>

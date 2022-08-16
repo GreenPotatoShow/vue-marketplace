@@ -1,5 +1,9 @@
 <template>
-  <a @click="$emit('go-to-index')"><h1 class="logo">ИНТЕРНЕТ-МАГАЗИН</h1></a>
+  <a>
+    <router-link to="/">
+      <h1 class="logo">ИНТЕРНЕТ-МАГАЗИН</h1>
+    </router-link>
+  </a>
 </template>
 
 <script>

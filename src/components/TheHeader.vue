@@ -1,7 +1,7 @@
 <template>
 <div class="header">
-  <the-logo @go-to-index="$emit('go-to-index')"></the-logo>
-  <cart-icon @go-to-cart="$emit('go-to-cart')" :cartCounter="cartCounter"></cart-icon>
+  <the-logo></the-logo>
+  <cart-icon :cartCounter="cartCounter"></cart-icon>
 </div>
 </template>
 

@@ -1,13 +1,22 @@
 <template>
 <div class="item-card">
   <a href="#">
-    <img class="item" :src="require(`../assets/picture${item.id + 1}.jpg`)">
-    <h4 class="item-name">{{item.name}}</h4>
-    <div class="item-price">{{item.price}}</div>
+    <router-link :to="{
+      name: 'item',
+      params: { id: item.id },
+      }" >
+      <img class="item" :src="require(`../assets/picture${item.id + 1}.jpg`)">
+      <h4 class="item-name">{{item.name}}</h4>
+      <div class="item-price">{{item.price}}</div>
+    </router-link>
   </a>
   <button-cart
+  :btnClass="btnClass"
   :id="item.id"
-  @add-to-cart="$emit('add-to-cart', item.id)"></button-cart>
+  :isInCart="isInCart"
+  @is-in-cart="isInCart = !isInCart"
+  @add-to-cart="$emit('add-to-cart', item.id)"
+  @update-counter="$emit('update-counter')"></button-cart>
 </div>
 </template>
 
@@ -16,11 +25,24 @@ import ButtonCart from './ButtonCart.vue';
 
 export default {
   name: 'itemCard',
+  data() {
+    return {
+      isInCart: false,
+    };
+  },
   props: {
     item: { type: Object, required: true },
   },
   components: {
     ButtonCart,
+  },
+  computed: {
+    btnClass() {
+      return {
+        'button-cart': !this.isInCart,
+        'button-cart-clicked': this.isInCart,
+      };
+    },
   },
 };
 </script>
