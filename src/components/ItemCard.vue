@@ -1,15 +1,13 @@
 <template>
 <div class="item-card">
-  <a href="#">
-    <router-link :to="{
-      name: 'item',
-      params: { id: item.id },
-      }" >
-      <img class="item" :src="require(`../assets/picture${item.id + 1}.jpg`)">
-      <h4 class="item-name">{{item.name}}</h4>
-      <div class="item-price">{{item.price}}</div>
-    </router-link>
-  </a>
+  <router-link :to="{
+    name: 'item',
+    params: { id: item.id },
+    }" >
+    <img class="item" :src="require(`../assets/picture${item.id + 1}.jpg`)">
+    <h4 class="item-name">{{item.name}}</h4>
+    <div class="item-price">{{item.price}}</div>
+  </router-link>
   <button-cart
   :btnClass="btnClass"
   :id="item.id"

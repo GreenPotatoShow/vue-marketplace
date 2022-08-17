@@ -1,12 +1,21 @@
 <template>
   <div class="cart-item-line">
     <div :style="{width: '20vw'}">
-      <h4 class="cart-item-name"> {{item.name}}</h4>
+      <router-link :to="{
+      name: 'item',
+      params: { id: item.id },
+      }" >
+        <h4 class="cart-item-name"> {{item.name}}</h4>
+      </router-link>
     </div>
     <div class="div">
-      <button @click="$emit('cart-minus', item.id)" class="button-counter">-</button>
+      <button @click="$emit('cart-minus', item.id)" class="button-counter">
+        <img class="button-counter-icon" src="../assets/minus.png">
+      </button>
       <div class="cart-item-counter">{{item.count}}</div>
-      <button @click="$emit('cart-plus', item.id)" class="button-counter">+</button>
+      <button @click="$emit('cart-plus', item.id)" class="button-counter">
+        <img class="button-counter-icon" src="../assets/plus.png">
+      </button>
     </div>
     <div class="item-cost">{{item.count * item.price}}</div>
   </div>
@@ -43,6 +52,10 @@ export default {
   margin-right: 10px;
 }
 
+.cart-item-name:hover {
+  color: #8c34c7;
+}
+
 .div {
   display: flex;
   flex-flow: row nowrap;
@@ -53,8 +66,8 @@ export default {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   color: white;
   background-color: #441761;
   border-radius: 10px;
@@ -70,6 +83,12 @@ export default {
 .button-counter:active {
   position: relative;
   top: 2px;
+}
+
+.button-counter-icon {
+  height: 30px;
+  width: 30px;
+  object-fit: cover;
 }
 
 .cart-item-counter {

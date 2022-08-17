@@ -1,9 +1,7 @@
 <template>
-  <a>
-    <router-link to="/">
-      <h1 class="logo">ИНТЕРНЕТ-МАГАЗИН</h1>
-    </router-link>
-  </a>
+  <router-link to="/">
+    <h1 class="logo">ИНТЕРНЕТ-МАГАЗИН</h1>
+  </router-link>
 </template>
 
 <script>

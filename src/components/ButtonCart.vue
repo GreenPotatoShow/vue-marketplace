@@ -57,6 +57,7 @@ export default {
   font-family: "Segoe UI Light", Tahoma, Geneva, Verdana, sans-serif, sans-serif;
   font-weight: bold;
   width: 150px;
+  height: 50px;
   cursor: pointer;
 }
 .button-cart:hover {
@@ -71,6 +72,7 @@ export default {
   font-family: "Segoe UI Light", Tahoma, Geneva, Verdana, sans-serif, sans-serif;
   font-weight: bold;
   width: 150px;
+  height: 50px;
   background-color: #441761;
   color: #fac136;
   border-radius: 10px;

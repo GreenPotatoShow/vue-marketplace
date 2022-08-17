@@ -1,9 +1,11 @@
 <template>
   <div class="cart-main-part">
     <div class="cart-item-part">
-      <div class="chapter">Корзина</div>
+      <div class="chapter">Корзина
+        <a @click="onClick" class="clear">Очистить корзину</a>
+      </div>
       <div class="empty-cart" v-if="empty">Корзина пуста</div>
-      <cart-item-lines
+      <cart-item-lines v-if="!empty"
       :cartItems="cartItems"
       @cart-minus="cartMinus"
       @cart-plus="cartPlus"></cart-item-lines>
@@ -108,6 +110,15 @@ export default {
       this.countAll += 1;
       setCart(this.cartItems);
     },
+    onClick() {
+      if (window.confirm('Очистить корзину?')) {
+        localStorage.clear();
+        this.empty = true;
+        this.countAll = 0;
+        this.totalCost = 0;
+        this.$emit('update-counter');
+      }
+    },
   },
 };
 </script>
@@ -117,6 +128,25 @@ export default {
   display: flex;
   flex-flow: row wrap;
   margin: 0 20px 0 10px;
+}
+
+.chapter {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.clear {
+  font-family: "Segoe UI Light", Tahoma, Geneva, Verdana, sans-serif, sans-serif;
+  font-weight: bold;
+  color: black;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.clear:hover {
+  color: #505050;
 }
 
 .cart-item-part {

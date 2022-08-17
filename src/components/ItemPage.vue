@@ -11,7 +11,7 @@
           </div>
           <button-cart
           :id="item.id"
-          :class="btnClass"
+          :btnClass="btnClass"
           :isInCart="isInCart"
           @is-in-cart="isInCart = !isInCart"
           @add-to-cart="$emit('add-to-cart', item.id)"
@@ -37,7 +37,7 @@ export default {
     item: { type: Object, required: true },
   },
   created() {
-    this.descr = descriptions[this.item.id];
+    this.descr = descriptions[this.item.id] || '';
   },
   components: {
     ButtonCart,
