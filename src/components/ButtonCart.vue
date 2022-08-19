@@ -15,7 +15,7 @@ export default {
     };
   },
   props: {
-    id: { type: Number, required: true },
+    item: { type: Object, required: true },
     btnClass: { type: Object, required: true },
     isInCart: { type: Boolean, required: true },
   },
@@ -23,7 +23,7 @@ export default {
     this.$emit('update-counter');
     const cart = getCart();
     if (!cartEmpty(cart)) {
-      const itemObject = cart.find((item) => item.id === this.id);
+      const itemObject = cart.find((item) => item.id === this.item.id);
       if (itemObject) {
         this.$emit('is-in-cart');
         this.text = 'Добавлено';
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     onClick() {
-      this.$emit('add-to-cart', this.id);
+      this.$emit('add-to-cart', this.item.id);
       if (this.isInCart === false) {
         this.$emit('is-in-cart');
         this.text = 'Добавлено';

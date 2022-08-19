@@ -3,14 +3,14 @@
     <h4 class="chapter">{{item.name}}</h4>
     <div class="item-flex">
       <img class="item-image"
-      :src="require(`../assets/picture${item.id + 1}.jpg`)">
+      :src="`https://source.unsplash.com/random/500x500?sig=${item.id + 1}`">
         <div class="describe-flex">
           <div class="description">{{descr}}</div>
           <div class="price-box">
             <div class="descr-item-price">{{item.price}}</div>
           </div>
           <button-cart
-          :id="item.id"
+          :item="item"
           :btnClass="btnClass"
           :isInCart="isInCart"
           @is-in-cart="isInCart = !isInCart"
@@ -37,7 +37,8 @@ export default {
     item: { type: Object, required: true },
   },
   created() {
-    this.descr = descriptions[this.item.id] || '';
+    const random = Math.floor(Math.random() * 4);
+    this.descr = descriptions[random];
   },
   components: {
     ButtonCart,

@@ -12,14 +12,11 @@
 <script>
 import ItemCard from './ItemCard.vue';
 import { getCart, setCart } from '../utils/functions';
-import { allItems } from '../utils/items';
 
 export default {
   name: 'ItemCards',
-  data() {
-    return {
-      items: allItems,
-    };
+  props: {
+    items: { type: Object, required: true },
   },
   components: {
     ItemCard,
@@ -28,7 +25,6 @@ export default {
     addToCart(id) {
       const itemToAdd = this.items[id];
       const cart = getCart();
-
       let newCart;
       if (cart) {
         const itemObject = cart.find((item) => item.id === id);

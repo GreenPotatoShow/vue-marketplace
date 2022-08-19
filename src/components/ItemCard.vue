@@ -4,13 +4,13 @@
     name: 'item',
     params: { id: item.id },
     }" >
-    <img class="item" :src="require(`../assets/picture${item.id + 1}.jpg`)">
+    <img class="item" :src="`https://source.unsplash.com/random/500x500?sig=${item.id + 1}`">
     <h4 class="item-name">{{item.name}}</h4>
     <div class="item-price">{{item.price}}</div>
   </router-link>
   <button-cart
   :btnClass="btnClass"
-  :id="item.id"
+  :item="item"
   :isInCart="isInCart"
   @is-in-cart="isInCart = !isInCart"
   @add-to-cart="$emit('add-to-cart', item.id)"

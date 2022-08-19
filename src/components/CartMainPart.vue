@@ -112,7 +112,7 @@ export default {
     },
     onClick() {
       if (window.confirm('Очистить корзину?')) {
-        localStorage.clear();
+        localStorage.setItem('cart', '[]');
         this.empty = true;
         this.countAll = 0;
         this.totalCost = 0;
