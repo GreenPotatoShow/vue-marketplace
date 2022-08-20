@@ -2,7 +2,7 @@ import {
   mNoun, fNoun, nNoun, pNoun, adj, fAdj, nAdj,
 } from './words';
 
-const newItems = false;
+const newItems = true;
 
 const random = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
 
