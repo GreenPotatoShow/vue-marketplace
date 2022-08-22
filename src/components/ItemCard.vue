@@ -1,20 +1,18 @@
 <template>
 <div class="item-card">
-  <router-link :to="{
-    name: 'item',
-    params: { id: item.id },
-    }" >
-    <img class="item" :src="`https://source.unsplash.com/random/500x500?sig=${item.id + 1}`">
+  <router-link :to="router" >
+    <img class="item" :src="imgSrc">
     <h4 class="item-name">{{item.name}}</h4>
     <div class="item-price">{{item.price}}</div>
   </router-link>
   <button-cart
-  :btnClass="btnClass"
-  :item="item"
-  :isInCart="isInCart"
-  @is-in-cart="isInCart = !isInCart"
-  @add-to-cart="$emit('add-to-cart', item.id)"
-  @update-counter="$emit('update-counter')"></button-cart>
+    :btnClass="btnClass"
+    :item="item"
+    :isInCart="isInCart"
+    @is-in-cart="isInCart = !isInCart"
+    @add-to-cart="$emit('add-to-cart', item.id)"
+    @update-counter="$emit('update-counter')"
+  ></button-cart>
 </div>
 </template>
 
@@ -40,6 +38,15 @@ export default {
         'button-cart': !this.isInCart,
         'button-cart-clicked': this.isInCart,
       };
+    },
+    router() {
+      return {
+        name: 'item',
+        params: { id: this.item.id },
+      };
+    },
+    imgSrc() {
+      return `https://source.unsplash.com/random/500x500?sig=${this.item.id + 1}`;
     },
   },
 };

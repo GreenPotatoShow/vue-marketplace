@@ -1,23 +1,24 @@
 <template>
   <div class="cart-item-line">
-    <div :style="{width: '20vw'}">
-      <router-link :to="{
-      name: 'item',
-      params: { id: item.id },
-      }" >
-        <h4 class="cart-item-name"> {{item.name}}</h4>
-      </router-link>
-    </div>
+    <router-link :to="router" >
+        <h4 class="cart-item-name">{{item.name}}</h4>
+    </router-link>
     <div class="div">
-      <button @click="$emit('cart-minus', item.id)" class="button-counter">
+      <button
+        @click="$emit('cart-minus', item.id)"
+        class="button-counter"
+      >
         <img class="button-counter-icon" src="../assets/minus.png">
       </button>
       <div class="cart-item-counter">{{item.count}}</div>
-      <button @click="$emit('cart-plus', item.id)" class="button-counter">
+      <button
+        @click="$emit('cart-plus', item.id)"
+        class="button-counter"
+      >
         <img class="button-counter-icon" src="../assets/plus.png">
       </button>
     </div>
-    <div class="item-cost">{{item.count * item.price}}</div>
+    <div class="item-cost">{{cost}}</div>
   </div>
 </template>
 
@@ -26,6 +27,17 @@ export default {
   name: 'CartItemLine',
   props: {
     item: { type: Object, required: true },
+  },
+  computed: {
+    router() {
+      return {
+        name: 'item',
+        params: { id: this.item.id },
+      };
+    },
+    cost() {
+      return this.item.count * this.item.price;
+    },
   },
 };
 </script>
@@ -39,6 +51,7 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
+
 .cart-item-name {
   display: flex;
   font-family: "Segoe UI Light", Tahoma, Geneva, Verdana, sans-serif, sans-serif;
@@ -50,6 +63,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   margin-right: 10px;
+  width: 20vw;
 }
 
 .cart-item-name:hover {

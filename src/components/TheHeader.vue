@@ -1,22 +1,28 @@
 <template>
 <div class="header">
-  <the-logo></the-logo>
-  <cart-icon :cartCounter="cartCounter"></cart-icon>
+  <router-link to="/">
+    <h1 class="logo">ИНТЕРНЕТ-МАГАЗИН</h1>
+  </router-link>
+  <div class="header-cart">
+    <router-link to="/cart" class="cart-logo">
+      <div v-if="isCounterShowed" class="counter">{{cartCounter}}</div>
+      <img class="cart" src="../assets/cart.png">
+      <div class="cart">Корзина</div>
+    </router-link>
+  </div>
 </div>
 </template>
 
 <script>
-import TheLogo from './TheLogo.vue';
-import CartIcon from './CartIcon.vue';
-
 export default {
   name: 'TheHeader',
   props: {
     cartCounter: { type: Number, required: true },
   },
-  components: {
-    TheLogo,
-    CartIcon,
+  computed: {
+    isCounterShowed() {
+      return this.cartCounter !== 0;
+    },
   },
 };
 </script>
@@ -40,10 +46,39 @@ export default {
   flex-flow: column wrap;
 }
 
-h2:hover {
+.logo {
+  margin-top: 28px;
+  padding-top: 0;
+  font-size: 40pt;
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+  color: #fac136;
+  cursor: pointer;
+}
+
+.logo:hover {
+  color: #fcdc8f;
+}
+
+.header-cart {
+  display: flex;
+  flex-flow: column wrap;
+  cursor: pointer;
+}
+
+.cart-logo{
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+.cart-logo:hover {
   filter: brightness(115%);
 }
-h2:active {
+.cart-logo:active {
   padding: 5px;
   margin: 13px -7px 13px -7px;
   background-color: #8323ab;
@@ -51,7 +86,7 @@ h2:active {
   border: 2px solid #8323ab;
 }
 
-a.cart {
+.cart {
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
   color: #fac136;
 }
@@ -63,6 +98,8 @@ img.cart {
 }
 
 .counter {
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+  color: #fac136;
   border-radius: 20px;
   border: 2px solid #441761;
   width: 20px;

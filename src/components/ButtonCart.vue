@@ -1,7 +1,5 @@
 <template>
-  <button
-  @click="onClick"
-  :class="btnClass">{{text}}</button>
+  <button @click="onClick" :class="btnClass">{{text}}</button>
 </template>
 
 <script>
@@ -23,7 +21,7 @@ export default {
     this.$emit('update-counter');
     const cart = getCart();
     if (!cartEmpty(cart)) {
-      const itemObject = cart.find((item) => item.id === this.item.id);
+      const itemObject = cart.find(({ id }) => id === this.item.id);
       if (itemObject) {
         this.$emit('is-in-cart');
         this.text = 'Добавлено';
@@ -33,7 +31,7 @@ export default {
   methods: {
     onClick() {
       this.$emit('add-to-cart', this.item.id);
-      if (this.isInCart === false) {
+      if (!this.isInCart) {
         this.$emit('is-in-cart');
         this.text = 'Добавлено';
       } else {

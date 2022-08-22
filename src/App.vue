@@ -1,8 +1,7 @@
 <template>
 <div>
   <the-header :cartCounter="cartCounter"></the-header>
-  <router-view
-  @update-counter="updateCounter"/>
+  <router-view @update-counter="updateCounter"/>
 </div>
 </template>
 
@@ -27,7 +26,7 @@ export default {
       const cart = getCart();
       let counter = 0;
       if (!cartEmpty(cart)) {
-        const filteredCart = cart.filter((item) => item.count !== 0);
+        const filteredCart = cart.filter(({ count }) => count !== 0);
         setCart(filteredCart);
         counter = filteredCart.length;
       }
