@@ -3,6 +3,7 @@
   <router-link :to="router" >
     <img class="item" :src="imgSrc">
     <h4 class="item-name">{{item.name}}</h4>
+    <div class="empty-div"><h6 v-if="item.brand">{{item.brand}}</h6></div>
     <div class="item-price">{{item.price}}</div>
   </router-link>
   <button-cart
@@ -69,6 +70,7 @@ img.item:active {
 
 .item-name {
   margin-top: 10px;
+  margin-bottom: 0;
   font-family: "Segoe UI Light", Tahoma, Geneva, Verdana, sans-serif, sans-serif;
   font-weight: bold;
   font-size: 13pt;
@@ -79,6 +81,22 @@ img.item:active {
   text-overflow: ellipsis;
 }
 .item-name:hover {
+  color: #8323ab;
+}
+
+.empty-div {
+  height: 10px;
+}
+
+h6 {
+  margin: 0;
+  text-align: end;
+  font-family: "Segoe UI Light", Tahoma, Geneva, Verdana, sans-serif, sans-serif;
+  font-weight: bold;
+  color: #441761;
+}
+
+h6:hover {
   color: #8323ab;
 }
 

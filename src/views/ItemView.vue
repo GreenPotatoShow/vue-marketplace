@@ -6,6 +6,7 @@
       :src="imgSrc">
       <div class="describe-flex">
         <div class="description">{{descr}}</div>
+        <div class="description" v-if="item.brand">Бренд: {{item.brand}}</div>
         <div class="price-box">
           <div class="descr-item-price">{{item.price}}</div>
         </div>
@@ -23,7 +24,9 @@
 </template>
 
 <script>
-import { getCart, setCart } from '../utils/functions';
+import {
+  getCart, setCart, getVisited, setVisited,
+} from '../utils/functions';
 import { allItems, descriptions } from '../utils/items';
 import ButtonCart from '../components/ButtonCart.vue';
 
@@ -46,6 +49,19 @@ export default {
     || this.items.find((item) => item.id === 0);
     const random = Math.floor(Math.random() * 4);
     this.descr = descriptions[random];
+  },
+  mounted() {
+    const visited = getVisited();
+    let newVisited;
+    if (visited) {
+      newVisited = [...visited, this.item];
+      if (newVisited.length > 5) {
+        newVisited.shift();
+      }
+    } else {
+      newVisited = [this.item];
+    }
+    setVisited(newVisited);
   },
   computed: {
     btnClass() {

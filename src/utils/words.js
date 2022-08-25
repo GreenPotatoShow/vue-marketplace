@@ -1181,3 +1181,10 @@ export const pAdj = [
   'сухой',
   'чужой',
 ];
+
+export const brands = [
+  'lego',
+  'adidas',
+  'apple',
+  'Красная цена',
+];

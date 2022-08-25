@@ -30,18 +30,18 @@ for (let i = 0; i <= 50; i += 1) {
     n = random(0, adj.length - 1);
     localAdj = adj[n];
 
-    localAdj = fAdj.indexOf(localAdj) === -1 ?
-    `${localAdj.slice(0, -2)}ая` :
-    `${localAdj.slice(0, -2)}яя`;
+    localAdj = fAdj.indexOf(localAdj) === -1
+      ? `${localAdj.slice(0, -2)}ая`
+      : `${localAdj.slice(0, -2)}яя`;
   } else if (n === 7) {
     n = random(0, nNoun.length - 1);
     name = nNoun[n];
     n = random(0, adj.length - 1);
     localAdj = adj[n];
 
-    localAdj = nAdj.indexOf(localAdj) === -1 ?
-    `${localAdj.slice(0, -2)}ое` :
-    `${localAdj.slice(0, -2)}ее`;
+    localAdj = nAdj.indexOf(localAdj) === -1
+      ? `${localAdj.slice(0, -2)}ое`
+      : `${localAdj.slice(0, -2)}ее`;
   } else if ((n === 8) || (n === 9)) {
     n = random(0, pNoun.length - 1);
     name = pNoun[n];
@@ -49,10 +49,10 @@ for (let i = 0; i <= 50; i += 1) {
     localAdj = adj[n];
     localAdj = ((localAdj.slice(-2, -1) === 'ы')
     || ((pAdj.indexOf(localAdj) === -1)
-    && (localAdj.slice(-2, -1) === 'о'))) ?
-    `${localAdj.slice(0, -2)}ые` :
-    `${localAdj.slice(0, -2)}ие`;
-    }
+    && (localAdj.slice(-2, -1) === 'о')))
+      ? `${localAdj.slice(0, -2)}ые`
+      : `${localAdj.slice(0, -2)}ие`;
+  }
   name = `${localAdj} ${name}`;
   name = `${name[0].toUpperCase()}${name.slice(1)}`;
   const price = random(1, 1000000);
