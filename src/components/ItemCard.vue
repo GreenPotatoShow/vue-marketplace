@@ -1,5 +1,5 @@
 <template>
-<div class="item-card">
+<div>
   <router-link :to="router" >
     <img class="item" :src="imgSrc">
     <h4 class="item-name">{{item.name}}</h4>

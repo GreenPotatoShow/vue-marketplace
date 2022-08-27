@@ -23,12 +23,28 @@
         <button :class="btnClass" :disabled="isDisabled">Оформить</button>
       </div>
     </div>
+    <div class="visited-main-part">
+      <div class="chapter">Недавно вы посещали...</div>
+      <div class="visited-goods">
+        <div :key="item.id" v-for="item in visitedItems">
+          <item-card
+            @add-to-cart="addToCart"
+            @update-counter="$emit('update-counter')"
+            :item="item"
+          ></item-card>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import CartItemLine from '../components/CartItemLine.vue';
-import { setCart, getCart, cartEmpty } from '../utils/functions';
+import ItemCard from '../components/ItemCard.vue';
+import { allItems } from '../utils/items';
+import {
+  setCart, getCart, getVisited, cartEmpty,
+} from '../utils/functions';
 
 export default {
   name: 'CartView',
@@ -36,17 +52,21 @@ export default {
     return {
       countAll: 0,
       totalCost: 0,
+      items: allItems,
       cartItems: [],
+      visitedItems: [],
       empty: false,
     };
   },
   mounted() {
     this.cartItems = getCart();
+    this.visitedItems = getVisited();
     this.findTotalCost();
     this.empty = cartEmpty(this.cartItems);
   },
   components: {
     CartItemLine,
+    ItemCard,
   },
   computed: {
     btnClass() {
@@ -76,6 +96,8 @@ export default {
       }
     },
     findTotalCost() {
+      this.countAll = 0;
+      this.totalCost = 0;
       if (this.cartItems) {
         this.cartItems.forEach((item) => {
           this.countAll += item.count;
@@ -110,11 +132,39 @@ export default {
     onClick() {
       if (window.confirm('Очистить корзину?')) {
         setCart([]);
+        this.cartItems = [];
         this.empty = true;
         this.countAll = 0;
         this.totalCost = 0;
         this.$emit('update-counter');
+        window.location.reload();
       }
+    },
+    addToCart(id) {
+      const itemToAdd = this.items[id];
+      this.cartItems = getCart();
+
+      let newCart;
+      if (this.cartItems) {
+        const itemObject = this.cartItems.find((item) => item.id === id);
+        if (typeof itemObject === 'undefined') {
+          newCart = [...this.cartItems, itemToAdd];
+          itemToAdd.count = 1;
+        } else {
+          newCart = this.cartItems.filter((item) => item.id !== id);
+          itemToAdd.count = 0;
+        }
+      } else {
+        newCart = [itemToAdd];
+        itemToAdd.count = 1;
+      }
+
+      this.cartItems = newCart;
+      setCart(newCart);
+      this.findTotalCost();
+      this.empty = this.countAll === 0;
+
+      this.$emit('update-counter');
     },
   },
 };
@@ -241,5 +291,25 @@ export default {
   font-size: 15px;
   font-family: "Segoe UI Light", Tahoma, Geneva, Verdana, sans-serif, sans-serif;
   font-weight: bold;
+}
+
+.visited-main-part {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 20px;
+  border: 2px solid white;
+  padding: 10px 10px 10px 20px;
+  height: fit-content;
+  width: 100%;
+  margin: 100px 20px 5px 20px;
+}
+
+.visited-goods {
+  margin: 10px 40px 30px 0;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row-reverse wrap;
 }
 </style>

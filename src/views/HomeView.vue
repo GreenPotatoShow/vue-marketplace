@@ -30,11 +30,8 @@
       </div>
       <button class="button-clear-filter" @click="clearFilter">Сбросить</button>
     </div>
-    <div id="goods">
-      <div
-        :key="item.id"
-        v-for="item in items"
-        class="item-card"
+    <div class="goods">
+      <div :key="item.id" v-for="item in items"
       >
         <item-card
           @add-to-cart="addToCart"
@@ -228,7 +225,7 @@ img.filter-button {
   top: 2px;
 }
 
-#goods {
+.goods {
   margin: 10px 40px 30px 0;
   display: flex;
   justify-content: space-between;

@@ -52,9 +52,13 @@ export default {
   },
   mounted() {
     const visited = getVisited();
-    let newVisited;
+    let newVisited = visited;
     if (visited) {
-      newVisited = [...visited, this.item];
+      const itemIndex = visited.find((item) => (item.id === this.item.id));
+      if (typeof itemIndex !== 'undefined') {
+        newVisited = visited.filter((item) => item.id !== this.item.id);
+      }
+      newVisited = [...newVisited, this.item];
       if (newVisited.length > 5) {
         newVisited.shift();
       }
