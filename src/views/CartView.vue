@@ -57,7 +57,6 @@ export default {
       cartItems: [],
       visitedItems: [],
       empty: false,
-      isVisitedShown: false,
     };
   },
   mounted() {
@@ -65,9 +64,6 @@ export default {
     this.visitedItems = getVisited();
     this.findTotalCost();
     this.empty = cartEmpty(this.cartItems);
-    if (this.visitedItems) {
-      this.isVisitedShown = (this.visitedItems.length > 0);
-    }
   },
   components: {
     CartItemLine,
@@ -82,6 +78,9 @@ export default {
     },
     isDisabled() {
       return this.countAll <= 0;
+    },
+    isVisitedShown() {
+      return this.visitedItems.length > 0;
     },
   },
   methods: {
@@ -307,7 +306,7 @@ export default {
   border: 2px solid white;
   padding: 10px 10px 10px 20px;
   height: fit-content;
-  width: fit-content;
+  width: 100%;
   margin: 30px 20px 5px 20px;
 }
 
