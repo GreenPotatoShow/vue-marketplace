@@ -80,7 +80,10 @@ export default {
       return this.countAll <= 0;
     },
     isVisitedShown() {
-      return this.visitedItems.length > 0;
+      if (this.visitedItems) {
+        return this.visitedItems.length > 0;
+      }
+      return false;
     },
   },
   methods: {
