@@ -23,11 +23,12 @@
         <button :class="btnClass" :disabled="isDisabled">Оформить</button>
       </div>
     </div>
-    <div class="visited-main-part">
+    <div v-if="isVisitedShown" class="visited-main-part">
       <div class="chapter">Недавно вы посещали...</div>
       <div class="visited-goods">
         <div :key="item.id" v-for="item in visitedItems">
           <item-card
+            class="item-card"
             @add-to-cart="addToCart"
             @update-counter="$emit('update-counter')"
             :item="item"
@@ -56,6 +57,7 @@ export default {
       cartItems: [],
       visitedItems: [],
       empty: false,
+      isVisitedShown: false,
     };
   },
   mounted() {
@@ -63,6 +65,9 @@ export default {
     this.visitedItems = getVisited();
     this.findTotalCost();
     this.empty = cartEmpty(this.cartItems);
+    if (this.visitedItems) {
+      this.isVisitedShown = (this.visitedItems.length > 0);
+    }
   },
   components: {
     CartItemLine,
@@ -302,14 +307,18 @@ export default {
   border: 2px solid white;
   padding: 10px 10px 10px 20px;
   height: fit-content;
-  width: 100%;
-  margin: 100px 20px 5px 20px;
+  width: fit-content;
+  margin: 30px 20px 5px 20px;
 }
 
 .visited-goods {
   margin: 10px 40px 30px 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-flow: row-reverse wrap;
+}
+
+.item-card {
+  margin: 0 10px;
 }
 </style>
